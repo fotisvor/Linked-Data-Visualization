@@ -1,0 +1,105 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <div class="tree-container">
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+          <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          <mat-radio-button [value]="{stateName: node.stateName, countyName: node.countyName}" (change)="onRadioChange($event)">
+            {{ node.name }}
+          </mat-radio-button>
+        </mat-tree-node>
+        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+          <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+            <mat-icon>
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          <mat-radio-button [value]="{stateName: node.stateName, countyName: node.countyName}" (change)="onRadioChange($event)">
+            {{ node.name }}
+          </mat-radio-button>
+        </mat-tree-node>
+      </mat-tree>
+      
+    </div>
+
+    <div class="map-area">
+
+        <input type="text" class="large-text-input" placeholder="Enter text here..." formControlName="searchText">
+        <div *ngIf="suggestions.length > 0" class="suggestions">
+          <ul>
+            <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+              {{ suggestion }}
+            </li>
+          </ul>
+        </div>
+
+      
+      <!-- Place the button under the calendar -->
+      <div class="button-container">
+        <button type="submit" class="search-button">Search</button>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <div id="map" class="map-container"></div>
+      <div *ngIf="metadata.length>0" class="metadata-box">
+        <h3>Metadata</h3>
+        <div *ngFor="let data of metadata">
+          <p *ngIf="data.stateName!='state'">County Version: {{ data.countyName }}</p>
+          <p *ngIf="data.stateName=='state'">State Version: {{ data.countyName }}</p>
+          <p *ngIf="data.stateName!='state'">State: {{ data.stateName }}</p>
+          <p>Beginning: {{ data.beginning }}</p>
+          <p>End: {{ data.end }}</p>
+        </div>
+      </div>
+      <div *ngIf="showPreviousMap" class="previous-map-metadata-container">
+        <div id="previousMap" class="previous-map-container ng-star-inserted"></div>
+        
+      </div>
+      <div class="slider-container">
+        <div class="slider-labels">
+          <span>{{ minYear }}</span>
+          <span>{{ maxYear }}</span>
+        </div>
+        <mat-slider
+          class="slider-container"
+          [disabled]="disabled"
+          [max]="max"
+          [min]="min"
+          [step]="step"
+          formControlName="slider"
+          [formControl]="sliderControl"
+          showTickMarks
+          discrete
+          [displayWith]="formatLabel"
+        >
+          <input matSliderThumb [(value)]="value" #slider (valueChange)="setYear($event)">
+        </mat-slider>
+      </div>
+    </div>
+
+    <div class="calendar-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date" [formControl]="date" (dateChange)="setDate($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+
+ 
+  </div>
+
+  
+
+
+</form>
+
+
+
+
+

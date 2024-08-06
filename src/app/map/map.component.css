@@ -1,0 +1,150 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr; /* Adjust column widths as needed */
+    grid-template-rows: auto 1fr auto; /* Adjust row heights as needed */
+    gap: 10px; /* Gap between elements */
+    height: 100vh; /* Full viewport height */
+    position: relative;
+
+  }
+  
+  .tree-container {
+    grid-row: 1 / span 3; /* Span three rows */
+    overflow-y: auto; /* Add scrollbar */
+    border-right: 1px solid #ccc; /* Optional: Add border */
+    padding: 10px; /* Optional: Add padding */
+  }
+  
+  .map-area {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    align-items:baseline;
+    margin-bottom: 20px; /* Space between map and text input */
+    position: relative; /* Ensure map-area is the reference point for absolute positioning */
+
+  }
+  
+  .large-text-input {
+    width: 100%;
+    height: 40px; /* Adjust height as needed */
+    font-size: 1.2em; /* Adjust font size as needed */
+    margin-bottom: 10px; /* Space between text input and map */
+    padding: 5px;
+    max-width: 750px;
+    position: relative; /* Needed for positioning suggestions */
+
+  }
+  
+  .map-container {
+    width: 100%;
+    height: 300px; /* Adjust as needed */
+    z-index: 100;
+    border: 1px solid #ccc; /* Optional: Add border */
+    margin-bottom: 20px; /* Space between map and slider */
+
+  }
+  
+  .previous-map-container.ng-star-inserted {
+    width: 100%;
+    height: 300px; /* Adjust as needed */
+    z-index: 100;
+    border: 1px solid #ccc; /* Optional: Add border */
+    margin-bottom: 20px; /* Space between map and slider */
+  }
+
+  .previous-map-container {
+    width: 100%;
+    height: 300px; /* Adjust as needed */
+    z-index: 100;
+    border: 1px solid #ccc; /* Optional: Add border */
+    margin-bottom: 20px; /* Space between map and slider */
+
+  }
+
+  .previous-map-metadata-container {
+    width: 100%;
+    height: 300px; /* Adjust as needed */
+    z-index: 100;
+    border: 1px solid #ccc; /* Optional: Add border */
+    margin-bottom: 20px; /* Space between map and slider */
+  }
+
+  .metadata-container p, .previous-metadata-container p {
+    margin: 0;
+    padding: 5px 0;
+  }
+  
+  .slider-container {
+    width: 100%; /* Full width */
+    max-width: 1000px; /* Maximum width */
+    margin-top: 30px; /* Space between slider and buttons */
+    display: flex;
+    align-items: center;
+    position: relative; /* Needed for positioning labels */
+  }
+  
+  .mat-slider-custom {
+    width: 80%; /* Centered in the container */
+    margin: 0 auto; /* Center horizontally */
+  }
+  
+  .slider-labels {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 10px; /* Adjust position as needed */
+  }
+  
+  
+  .calendar-container {
+    grid-column: 3;
+    margin-bottom: 20px; /* Space between calendar and buttons */
+   /* Optional: Add padding */
+  }
+
+  button {
+    margin: 10px;
+  }
+
+
+  
+  .suggestions {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    width: 100%;
+
+    max-height: 100px;
+    overflow-y: auto;
+    z-index: 200;
+
+    top: 10%; /* Position below the input field */
+  }
+  
+  .suggestions ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .suggestions li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .suggestions li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 5px; /* Optional: add some space between the input and the error message */
+    font-weight: bold; /* Optional: make the error message bold */
+  }
+
+  
+
+
+  
