@@ -52,15 +52,15 @@ export class MapComponent implements OnInit,  AfterViewChecked {
   metadata: any = {};
   previousMetadata: any = {};
   previousVersion: any = {};
-  minYear = 1776;
-  maxYear = new Date().getFullYear();
+  minYear = 1600;
+  maxYear = 2000;
   currentYear = new Date().getFullYear();
   selectedLocation: string | null = null;
   locationType: string | null = null; // Track whether the selected location is a state or county
   selectedState: string | null = null; // Store selected state
   disabled = false;
-  max = new Date().getFullYear();
-  min = 1776;
+  max = 2000;
+  min = 1600;
   showTicks = false;
   step = 1;
   thumbLabel = false;
@@ -103,6 +103,7 @@ export class MapComponent implements OnInit,  AfterViewChecked {
 
   ngOnInit(): void {
     this.initMap();
+
     this.sliderControl.valueChanges.pipe(debounceTime(1000)).subscribe(() => {
       this.getSliderValue();
     });
@@ -194,37 +195,11 @@ export class MapComponent implements OnInit,  AfterViewChecked {
     }
   }
 
-  private addMultiPolygon(): void {
-    if (this.map) {
-      this.geoJsonService.getGeoJson().subscribe(geoJson => {
-        L.geoJSON(geoJson, {
-          style: () => ({
-            color: 'blue',
-            fillColor: 'cyan',
-            fillOpacity: 0.5,
-          }),
-          onEachFeature: (feature, layer) => {
-            layer.on('click', (e) => {
-              this.openPropertiesDialog(feature.properties);
-              console.log(`Clicked on polygon`);
-            });
-          }
-        }).addTo(this.map!);
-      });
-    } else {
-      console.error("Map not initialized");
-    }
-  }
+  
 
   
 
-  private openPropertiesDialog(properties: any): void {
-    this.dialog.open(PropertyModalComponent, {
-      width: '250px',
-      data: properties
-    });
-  }
-
+  
   formatLabel(value: number): string {
     return `${value}`;
   }
@@ -287,6 +262,30 @@ export class MapComponent implements OnInit,  AfterViewChecked {
     this.searchForm.get('searchText')!.setValue(suggestion, { emitEvent: false });
     this.checkSearchText(suggestion);
     this.suggestions = [];
+
+    // Find the corresponding node in the tree data
+    const selectedNode = this.treeControl.dataNodes.find(node => node.name === suggestion);
+
+    if (selectedNode) {
+      // Ensure the parent node is expanded if necessary
+      if (selectedNode.level > 0) {
+        const parentNode = this.treeControl.dataNodes.find(node => node.stateName === selectedNode.stateName && node.level === 0);
+        if (parentNode) {
+          this.treeControl.expand(parentNode);
+        }
+      }
+
+      // Manually set the form control value and trigger onRadioChange
+      this.searchForm.get('selectedLocation')!.setValue(selectedNode);
+      this.selectedLocation = selectedNode.countyName || selectedNode.stateName;
+      this.selectedState = selectedNode.stateName;
+      this.locationType = selectedNode.countyName ? 'county' : 'state';
+
+      // Force the radio button to be selected
+      this.treeControl.expand(selectedNode);
+      this.cdRef.detectChanges(); // Trigger change detection
+      this.onRadioChange({ value: { stateName: selectedNode.stateName, countyName: selectedNode.countyName } });
+    }
   }
 
   private updateMapWithGeoJson(geoJson: any): void {
@@ -298,12 +297,7 @@ export class MapComponent implements OnInit,  AfterViewChecked {
           fillColor: 'cyan',
           fillOpacity: 0.5,
         }),
-        onEachFeature: (feature, layer) => {
-          layer.on('click', (e) => {
-            this.openPropertiesDialog(feature.properties);
-            console.log(`Clicked on polygon`);
-          });
-        }
+        
       }).addTo(this.drawnLayers);
     }
   }
@@ -317,12 +311,7 @@ export class MapComponent implements OnInit,  AfterViewChecked {
           fillColor: 'cyan',
           fillOpacity: 0.5,
         }),
-        onEachFeature: (feature, layer) => {
-          layer.on('click', (e) => {
-            this.openPropertiesDialog(feature.properties);
-            console.log(`Clicked on polygon`);
-          });
-        }
+       
       }).addTo(this.previousdrawnLayers);
     }
   }
@@ -344,15 +333,20 @@ export class MapComponent implements OnInit,  AfterViewChecked {
           if (this.selectedLocation && this.locationType){
             this.rdfQueryService.getPreviousCountyVersion(dateString, this.selectedLocation, this.locationType).subscribe(
               previousVersion => {
-                
-                this.ngZone.run(() => {
+                if (previousVersion) {
+                  this.ngZone.run(() => {
+                      this.showPreviousMap = true;
+                  }); // Trigger change detection
+                  console.log('check ');
                   this.previousVersion = previousVersion || {};
-                    this.showPreviousMap = true;
+                  setTimeout(() => {
                     this.updatePreviousMapWithGeoJson(previousVersion);
-                    console.log('Previous version after update:', previousVersion);
-                    
- 
-                }); // Trigger change detection
+                  }, 100);
+                  console.log('Previous version after update:', previousVersion);
+                }
+                else if (this.previousdrawnLayers){
+                  this.previousdrawnLayers.clearLayers();
+                }
               },
               error => {
                 console.error('Error fetching previous version:', error);

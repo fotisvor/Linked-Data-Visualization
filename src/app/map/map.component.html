@@ -18,7 +18,7 @@
               {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
           </button>
-          <mat-radio-button [value]="{stateName: node.stateName, countyName: node.countyName}" (change)="onRadioChange($event)">
+          <mat-radio-button class="mat-radio-1-input" [value]="{stateName: node.stateName, countyName: node.countyName}" (change)="onRadioChange($event)">
             {{ node.name }}
           </mat-radio-button>
         </mat-tree-node>
@@ -27,35 +27,27 @@
     </div>
 
     <div class="map-area">
+      <div class="search-container">
+          <input type="text" class="large-text-input" placeholder="Enter text here..." formControlName="searchText">
+          <div *ngIf="suggestions.length > 0" class="suggestions">
+            <ul>
+              <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+                {{ suggestion }}
+              </li>
+            </ul>
+          </div>
 
-        <input type="text" class="large-text-input" placeholder="Enter text here..." formControlName="searchText">
-        <div *ngIf="suggestions.length > 0" class="suggestions">
-          <ul>
-            <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
-              {{ suggestion }}
-            </li>
-          </ul>
+        
+        <!-- Place the button under the calendar -->
+        <div class="button-container">
+          <button type="submit" class="search-button">Search</button>
         </div>
-
-      
-      <!-- Place the button under the calendar -->
-      <div class="button-container">
-        <button type="submit" class="search-button">Search</button>
       </div>
-
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-      <div id="map" class="map-container"></div>
-      <div *ngIf="metadata.length>0" class="metadata-box">
-        <h3>Metadata</h3>
-        <div *ngFor="let data of metadata">
-          <p *ngIf="data.stateName!='state'">County Version: {{ data.countyName }}</p>
-          <p *ngIf="data.stateName=='state'">State Version: {{ data.countyName }}</p>
-          <p *ngIf="data.stateName!='state'">State: {{ data.stateName }}</p>
-          <p>Beginning: {{ data.beginning }}</p>
-          <p>End: {{ data.end }}</p>
-        </div>
-      </div>
+        <div class="map-title">Current Version Map</div>
+        <div id="map" class="map-container"></div>
       <div *ngIf="showPreviousMap" class="previous-map-metadata-container">
+        <div class="map-title">Previous Version Map</div>
         <div id="previousMap" class="previous-map-container ng-star-inserted"></div>
         
       </div>
@@ -88,7 +80,47 @@
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
+      <!-- Metadata Table Container -->
+<div class="metadata-container" *ngIf="metadata.length > 0">
+  <table class="metadata-table">
+    <tr>
+      <th *ngIf="metadata[0]?.stateName != 'state'">County Version</th>
+      <th *ngIf="metadata[0]?.stateName == 'state'">State Version</th>
+    </tr>
+    <tr>
+      <td *ngFor="let data of metadata">
+        {{ data.countyName }}
+      </td>
+    </tr>
+    <tr>
+      <th th *ngIf="metadata[0]?.stateName != 'state'">State</th>
+    </tr>
+    <tr th *ngIf="metadata[0]?.stateName != 'state'">
+      <td *ngFor="let data of metadata">
+        {{ data.stateName }}
+      </td>
+    </tr>
+    <tr>
+      <th>Beginning Date</th>
+    </tr>
+    <tr>
+      <td *ngFor="let data of metadata">
+        {{ data.beginning }}
+      </td>
+    </tr>
+    <tr>
+      <th>End Date</th>
+    </tr>
+    <tr>
+      <td *ngFor="let data of metadata">
+        {{ data.end }}
+      </td>
+    </tr>
+  </table>
+</div>
     </div>
+
+    
 
 
  

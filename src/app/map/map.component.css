@@ -5,6 +5,7 @@
     gap: 10px; /* Gap between elements */
     height: 100vh; /* Full viewport height */
     position: relative;
+    
 
   }
   
@@ -13,52 +14,171 @@
     overflow-y: auto; /* Add scrollbar */
     border-right: 1px solid #ccc; /* Optional: Add border */
     padding: 10px; /* Optional: Add padding */
+    background-color: #f7f7f7; /* Light background for the tree menu */
+    border-radius: 4px; /* Rounded corners */
+    max-width: fit-content; /* Limit the width of the tree menu */
   }
+  
+  .mat-tree-node {
+    display: flex;
+    align-items: center;
+    border: #42a5f5;
+    font-size: 16px;
+    padding: 5px 0;
+    margin: 5px 0;
+    border-radius: 4px; /* Rounded corners for each node */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #3821b92b;
+   
+    
+  }
+  
+  .mat-tree-node:hover {
+    background-color: #e0f7fa; /* Light blue background on hover */
+    color: #00796b;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow effect on hover */
+  }
+  
+  .mat-radio-button {
+    margin-left: 10px; /* Space between icon and radio button */
+    color: #00796b74; /* Primary color for the radio button */
+  }
+  
+  .mat-radio-button .mat-radio-inner-circle {
+    background-color: #193d685f !important; /* Inner circle color */
+  }
+  
+  .mat-icon-rtl-mirror {
+    transform: rotate(90deg); /* Rotate expand/collapse icon */
+    color: #00796b63; /* Primary color for the icon */
+  }
+  
+  .mat-icon-rtl-mirror.expand_more {
+    transform: rotate(270deg); /* Rotate the expand icon when expanded */
+    color: #00796b57;
+  }
+  
+  .mat-tree-node[aria-expanded="true"] .mat-icon-rtl-mirror {
+    transform: rotate(270deg); /* Rotate icon when expanded */
+    color: #00796b;
+  }
+  
+  .mat-tree-node .mat-icon {
+    transition: transform 0.3s ease;
+    color: #0a3732;
+  }
+  
+  .mat-tree-node .mat-icon-rtl-mirror {
+    color: #00796b;
+  }
+
+  .mdc-radio {
+    --mdc-theme-primary: #00796b; /* Change the primary color to your desired color */
+    color: #00796b;
+  }
+  
+  .mdc-radio .mdc-radio__native-control:checked + .mdc-radio__background .mdc-radio__outer-circle {
+    border-color: #00796b; /* Outer circle color when selected */
+    color: #00796b;
+  }
+  
+  .mdc-radio .mdc-radio__native-control:checked + .mdc-radio__background .mdc-radio__inner-circle {
+    background-color: #00796b; /* Inner circle color when selected */
+    color: #00796b;
+  }
+  
+  .mdc-radio__background {
+    border-radius: 50%;
+    border: 2px solid #00796b; /* Default border color */
+    background-color: rgb(255, 255, 255); /* Background color of radio button */
+    color: #00796b;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .mdc-radio:hover .mdc-radio__background {
+    border-color: #004d40; /* Darken border color on hover */
+    background-color: #e0f2f1; /* Light cyan background on hover */
+    color: #00796b;
+  }
+  
+  .mdc-label .mat-radio-input {
+    font-weight: bold; /* Make the text bold */
+    color: #3f51b5; /* Default text color */
+    font-size: 28px; /* Increase the font size */
+    text-transform: uppercase; /* Make the text uppercase */
+    letter-spacing: 0.05em; /* Increase letter spacing */
+    font-family: 'Roboto', sans-serif; /* Change the font family to Roboto */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition for hover effect */
+    cursor: pointer; /* Change cursor to pointer on hover */
+  }
+  
+  .mdc-label:hover {
+    color: #303f9f; /* Darker shade of blue on hover */
+    background-color: #e0e0e0; /* Light gray background on hover */
+  }
+  
   
   .map-area {
     grid-column: 2;
     display: flex;
     flex-direction: column;
     align-items:baseline;
+    
     margin-bottom: 20px; /* Space between map and text input */
     position: relative; /* Ensure map-area is the reference point for absolute positioning */
 
   }
-  
-  .large-text-input {
-    width: 100%;
-    height: 40px; /* Adjust height as needed */
-    font-size: 1.2em; /* Adjust font size as needed */
-    margin-bottom: 10px; /* Space between text input and map */
-    padding: 5px;
-    max-width: 750px;
-    position: relative; /* Needed for positioning suggestions */
+ /* Styling the large text input */
+.large-text-input {
+  width: 80%;
+  height: 40px; /* Adjust height as needed */
+  font-size: 1.2em; /* Adjust font size as needed */
+  flex-grow: 1;
+  padding: 10px; /* Increased padding for a more substantial look */
+  border: 2px solid #ccc; /* Border color and width */
+  border-radius: 8px; /* Rounded corners for a modern look */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  outline: none; /* Remove default input focus outline */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for focus effect */
+}
 
-  }
-  
+/* Focus state for the input */
+.large-text-input:focus {
+  border-color: #0066cc; /* Change border color on focus */
+  box-shadow: 0px 4px 8px rgba(0, 102, 204, 0.3); /* Enhance shadow on focus */
+} 
   .map-container {
     width: 100%;
     height: 300px; /* Adjust as needed */
     z-index: 100;
-    border: 1px solid #ccc; /* Optional: Add border */
+    
     margin-bottom: 20px; /* Space between map and slider */
+    border: 5px solid #0066cc; /* Matches the theme color */
+    border-radius: 8px;
 
-  }
+  } 
+  
+  
   
   .previous-map-container.ng-star-inserted {
     width: 100%;
     height: 300px; /* Adjust as needed */
     z-index: 100;
-    border: 1px solid #ccc; /* Optional: Add border */
+    border: 5px solid #0066cc; /* Matches the theme color */
     margin-bottom: 20px; /* Space between map and slider */
+   
+    border-radius: 8px;
   }
 
   .previous-map-container {
     width: 100%;
     height: 300px; /* Adjust as needed */
     z-index: 100;
-    border: 1px solid #ccc; /* Optional: Add border */
+    border-radius: 8px;
+
     margin-bottom: 20px; /* Space between map and slider */
+    border: 5px solid #0066cc; /* Matches the theme color */    
+    border-radius: 8px;
 
   }
 
@@ -66,14 +186,42 @@
     width: 100%;
     height: 300px; /* Adjust as needed */
     z-index: 100;
-    border: 1px solid #ccc; /* Optional: Add border */
+    border-radius: 8px;
     margin-bottom: 20px; /* Space between map and slider */
   }
 
-  .metadata-container p, .previous-metadata-container p {
-    margin: 0;
-    padding: 5px 0;
-  }
+  /* Metadata table styling */
+.metadata-container {
+  margin-top: 28px; /* Space between the calendar and the table */
+  /*max-width: 750px; /* Match the width of the calendar container */
+}
+
+.metadata-table {
+  width: 100%;
+  border-collapse: collapse; /* Remove gaps between table borders */
+  font-size: 1em; /* Adjust font size as needed */
+  text-align: left; /* Align text to the left */
+  background-color: #f9f9f9; /* Light background color for the table */
+}
+
+.metadata-table th, .metadata-table td {
+  padding: 10px;
+  
+  border-radius: 8px;
+}
+
+.metadata-table th {
+  background-color: #0066cc; /* Blue background for headers */
+  color: white; /* White text for headers */
+}
+
+.metadata-table tr:nth-child(even) {
+  background-color: #f2f2f2; /* Light gray background for even rows */
+}
+
+.metadata-table tr:hover {
+  background-color: #e0f0ff; /* Light blue hover effect */
+}
   
   .slider-container {
     width: 100%; /* Full width */
@@ -98,16 +246,150 @@
   }
   
   
-  .calendar-container {
-    grid-column: 3;
-    margin-bottom: 20px; /* Space between calendar and buttons */
-   /* Optional: Add padding */
-  }
+/* Calendar container styling */
+.calendar-container {
+  grid-column: 3;
+   
+  flex-direction: column;
+  align-items:baseline;
+  margin-bottom: 20px; /* Space between map and text input */
+  position: relative; /* Ensure map-area is the reference point for absolute positioning */
+  display: flex;
+  height: 100px;
+  justify-content: top; /* Center the calendar on the page */
+  margin-bottom: 20px;
+  background-color: f#0066cc; 
+}
 
-  button {
+/* Styling the mat-form-field which holds the calendar */
+.calendar-container mat-form-field {
+  width: 100%;
+  max-width: 300px; /* Adjust the width of the calendar container */
+  background-color: f#0066cc; 
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: #0066cc !important;
+}
+
+::ng-deep .mat-form-field-label {
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-datepicker-toggle .mat-icon-button {
+  color: #ffffff !important;
+}
+
+/* Blue themed calendar icon */
+.mat-datepicker-toggle button {
+  color: #0066cc; /* Set the color of the calendar icon to blue */
+}
+
+/* Blue border and label for the input field */
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: f#0066cc; /* Light blue background for the input field */
+  border-radius: 8px; /* Rounded corners */
+}
+
+.mat-form-field-appearance-fill .mat-form-field-outline {
+  color: #0066cc; /* Set the color of the outline to blue */
+}
+
+.mat-form-field{
+  width: 100%;
+  color: #0066cc !important; 
+}
+
+.mat-form-field-label {
+  color: #0066cc !important; /* Force the label to be blue */
+}
+
+.mat-form-field-appearance-fill .mat-form-field-outline-thick {
+  color: #0066cc; /* Thicker blue outline */
+}
+
+/* Calendar pop-up styling */
+.mat-calendar {
+  background-color: #0066cc; /* Background color for the calendar pop-up */
+  border: 1px solid #ffffff; /* Blue border around the calendar */
+  border-radius: 8px; /* Rounded corners for the calendar pop-up */
+}
+
+/* Calendar header (Month/Year) styling */
+.mat-calendar-header {
+  background-color: #0066cc; /* Blue background for the header */
+  color: #ffffff; /* White text color for the header */
+}
+
+/* Buttons in the calendar header (previous/next month) */
+.mat-calendar-controls .mat-icon-button {
+  color: #ffffff; /* White color for the arrow buttons */
+}
+
+/* Styling the selected date in the calendar */
+.mat-calendar-body-cell-content.mat-calendar-body-selected {
+  background-color: #0066cc !important; /* Blue background for the selected date */
+  color: #ffffff !important; /* White text for the selected date */
+}
+
+/* Hover effect on calendar dates */
+.mat-calendar-body-cell-content:hover {
+  background-color: #e0f0ff; /* Light blue hover effect */
+}
+
+/* Focused date */
+.mat-calendar-body-active {
+  background-color: #e0f0ff; /* Light blue background for focused date */
+}
+
+/* Today’s date styling */
+.mat-calendar-body-today {
+  border-color: #0066cc; /* Blue border around today’s date */
+}
+
+/* Styling the calendar year view */
+.mat-calendar-body-selected {
+  background-color: #0066cc; /* Blue background for selected year */
+  color: #ffffff; /* White text for selected year */
+}
+
+.search-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px; /* Space between input and map */
+}
+
+button {
     margin: 10px;
+    background: linear-gradient(135deg, #42a5f5, #478ed1); /* Gradient background */
+    color: white; /* White text */
+    border: none; /* Remove default border */
+    padding: 10px 20px; /* Add padding for a bigger button */
+    font-size: 1em; /* Adjust font size */
+    border-radius: 25px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    margin-top: 10px; /* Space between button and slider */
+    position: relative;
+    flex-direction: column;
+    align-items:baseline;
+    height: 40px;
   }
 
+  .search-button:hover {
+    background: linear-gradient(135deg, #0a65af, #478ed1); /* Gradient background */
+  }
+
+  .map-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #0066cc;
+
+    margin-bottom: 10px;
+  }
 
   
   .suggestions {
